@@ -1,0 +1,38 @@
+{
+  "name": "creamcrop",
+  "version": "1.0.0",
+  "description": "A cream-of-the-crop, top-of-the-top, slice-and-chop, absolutely minimalist news getter.",
+  "main": "src/index.js",
+  "bin": {
+    "cream": "src/bin/index.js",
+    "creamcrop": "src/bin/index.js"
+  },
+  "scripts": {
+    "test": "mocha .",
+    "lint": "eslint src/**"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/quantum9innovation/creamcrop.git"
+  },
+  "keywords": [
+    "news",
+    "rss-reader",
+    "news-api",
+    "news-getter"
+  ],
+  "author": "Qlabs (@Quantalabs)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/quantum9innovation/creamcrop/issues"
+  },
+  "homepage": "https://github.com/quantum9innovation/creamcrop#readme",
+  "devDependencies": {
+    "eslint": "^7.29.0"
+  },
+  "dependencies": {
+    "boxen": "^5.0.1",
+    "open": "^8.2.1",
+    "rss-parser": "^3.12.0"
+  }
+}
