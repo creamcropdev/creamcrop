@@ -32,7 +32,9 @@
   },
   "dependencies": {
     "boxen": "^5.0.1",
+    "center-align": "^1.0.1",
     "open": "^8.2.1",
-    "rss-parser": "^3.12.0"
+    "rss-parser": "^3.12.0",
+    "yargs": "^17.0.1"
   }
 }
