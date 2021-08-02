@@ -1,4 +1,4 @@
-const metadata = require('../utils/metadata')
+const metadata = require('./utils/metadata')
 
 exports.version = metadata.version
 exports.about = metadata.about
