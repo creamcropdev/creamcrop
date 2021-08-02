@@ -3,6 +3,7 @@
 // Local
 const metadata = require('../utils/metadata')
 const rss = require('../utils/rss')
+const web = require('../utils/web')
 
 // Dependencies
 const boxen = require('boxen');
@@ -40,6 +41,12 @@ else if (process.argv[2] == 'fetch') {
     (async () => {  
         let data = await rss.parse(process.argv[3])
         console.log(data)
+    })();
+}
+else if (process.argv[2] == 'serve') {
+    (async () => {
+        let data = await rss.parse(process.argv[3])
+        web.serve(data)
     })();
 }
 else {
