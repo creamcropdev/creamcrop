@@ -1,6 +1,8 @@
-<img src="./assets/logo.png" align="center" width=300>
+<div align='center'>
+<img src="./assets/logo.png">
+</div>
 
-    
+
 A cream-of-the-crop, top-of-the-top, slice-and-chop, absolutely minimalist news getter
 ## Installation
 
