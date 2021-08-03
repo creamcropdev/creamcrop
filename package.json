@@ -1,6 +1,6 @@
 {
   "name": "creamcrop",
-  "version": "1.0.0",
+  "version": "0.1.0",
   "description": "A cream-of-the-crop, top-of-the-top, slice-and-chop, absolutely minimalist news getter.",
   "main": "src/index.js",
   "bin": {
@@ -8,6 +8,7 @@
     "creamcrop": "src/bin/index.js"
   },
   "scripts": {
+    "test": "bash tests/main.sh",
     "lint": "eslint src/**"
   },
   "repository": {

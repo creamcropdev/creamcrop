@@ -1,0 +1,9 @@
+blank_issues_enabled: false
+
+contact_links:
+  - name: Get help in GitHub Discussions
+    url: https://github.com/Quantalabs/shelf/discussions
+    about: For any questions on installation, usage, etc.
+  - name: Feature request?
+    url: https://github.com/Quantalabs/shelf/discussions
+    about: We're open to new ideas, but since we're still in development, you can submit your idea as a discussion, and, if it's good, we can transfer it over to an issue and start work on it.

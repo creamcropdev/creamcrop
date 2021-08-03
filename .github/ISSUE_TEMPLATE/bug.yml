@@ -1,0 +1,46 @@
+name: I found a bug
+description: "There's a problem. You need answer. Fill this out."
+title: "[Bug]: "
+labels: [bug]
+assignees:
+  - Quantalabs
+body:
+  - type: markdown
+    attributes:
+      value: Please make sure you fill out everything below.
+  - type: textarea
+    attributes:
+      render: shell
+      label: "Describe the error"
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+      render: shell
+      label: "How is your shelf configured. Include how you installed, and how you run shelf"
+    validations:
+      required: true
+  - type: checkboxes
+    attributes:
+      description: Check which values are true for you environment
+      options:
+        - label: OS - Windows
+        - label: OS - MacOS
+        - label: OS - Linux
+        - label: OS - Windows - Windows Subsystem for Linux
+  - type: input
+    attributes:
+      label: Python Version
+      description: Your python version. If you use anaconda, skip this and fill out the next field.
+      placeholder: "3.8.5"
+  - type: input
+    attributes:
+      label: Anaconda Version
+      description: Your anaconda version, and the python version you are using in anaconda. If you use python, fill in the previous field and skip this one.
+      placeholder: "conda 4.9.2 on 3.9 environment."
+  - type: textarea
+    attributes:
+      render: shell
+      label: Step-by-step reproduction instructions
+    validations:
+      required: true

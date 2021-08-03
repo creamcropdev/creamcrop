@@ -43,8 +43,7 @@ yargs
     .usage('\u001b[1mUsage: $0 <command> [options]\u001b[0m')
     .command({
         command: 'fetch [url]', 
-        desc: 'Fetch a feed.', 
-        aliases: ['f'],
+        desc: 'Fetch a feed.',
         builder: (yargs) => {
             yargs.positional('url', {
                 type: 'string',
@@ -58,7 +57,6 @@ yargs
     .command({
         command: 'serve [url]',
         desc: 'Serves website from RSS feed',
-        aliases: ['s'],
         builder: (yargs) => {
             yargs.positional('url', {
                 type: 'string',
@@ -75,7 +73,6 @@ yargs
     .command({
         command: 'about',
         desc: 'Displays package info and exits.',
-        aliases: ['a'],
         handler: function() {
             about()
         }
