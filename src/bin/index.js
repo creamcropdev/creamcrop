@@ -18,17 +18,6 @@ function version() {
     console.log(metadata.version)
 }
 
-function help() {
-    console.log(
-        '-h\n'+
-        'Displays the current help message and exists. ALIAS: --help.\n\n'+
-        '-a\n'+
-        'Displays package info and exits. ALIAS: --about.\n\n'+
-        '-v\n'+
-        'Displays version number and exits. ALIAS: --version.'
-    )
-}
-
 function parse(url) {
     (async () => {  
         let data = await rss.parse(url)
@@ -121,4 +110,3 @@ yargs
 
 exports.about = about
 exports.version = version
-exports.help = help
