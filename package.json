@@ -28,7 +28,7 @@
   },
   "homepage": "https://github.com/quantum9innovation/creamcrop#readme",
   "devDependencies": {
-    "eslint": "^7.29.0"
+    "eslint": "^7.32.0"
   },
   "dependencies": {
     "boxen": "^5.0.1",
