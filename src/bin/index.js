@@ -8,8 +8,17 @@ const web = require('../utils/web')
 // Dependencies
 const boxen = require('boxen');
 const yargs = require('yargs')
-var center = require('center-align');
+const updateNotifier = require('update-notifier');
+const pkg = require('../../package.json');
 
+const notifier = updateNotifier({
+	pkg,
+	updateCheckInterval: 1000 * 60 * 60 * 24 * 7 // 1 week
+});
+
+if (notifier.update) {
+	console.log(`Update available: ${notifier.update.latest}`);
+}
 function about() {
     console.log(metadata.about)
 }
