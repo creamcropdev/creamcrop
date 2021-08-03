@@ -76,8 +76,15 @@ Thank you to all contributors ([emoji key](https://github.com/kentcdodds/all-con
 <!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
 <!-- prettier-ignore-start -->
 <!-- markdownlint-disable -->
+<table>
+  <tr>
+    <td align="center"><a href="https://quantalabs.github.io/"><img src="https://avatars.githubusercontent.com/u/55121845?v=4?s=100" width="100px;" alt=""/><br /><sub><b>QLabs</b></sub></a><br /><a href="https://github.com/Quantalabs/creamcrop/commits?author=Quantalabs" title="Code">💻</a></td>
+  </tr>
+</table>
+
 <!-- markdownlint-restore -->
 <!-- prettier-ignore-end -->
+
 <!-- ALL-CONTRIBUTORS-LIST:END -->
 
 This project follows the [all-contributors](https://github.com/kentcdodds/all-contributors) specification.
