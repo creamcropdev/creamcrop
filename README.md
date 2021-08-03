@@ -60,27 +60,18 @@ npm run lint
 The creamcrop project is licensed under the GPL-3.0 license.
 
   
-## Documentation
+### Documentation
 
 Documentation is avaliable at [creamcrop.js.org](https://creamcrop.js.org)
 
   
-## Authors
+### Authors
 
 - [@Quantalabs](https://www.github.com/Quantalabs)
 
+### Contributors ✨
+
 Thank you to all contributors ([emoji key](https://github.com/kentcdodds/all-contributors#emoji-key)):
-
-<!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
-
-<!-- ALL-CONTRIBUTORS-LIST:END -->
-
-This project follows the [all-contributors](https://github.com/kentcdodds/all-contributors) specification.
-Contributions of any kind welcome!
-  
-## Contributors ✨
-
-Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/docs/en/emoji-key)):
 
 <!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
 <!-- prettier-ignore-start -->
@@ -89,4 +80,5 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
 <!-- prettier-ignore-end -->
 <!-- ALL-CONTRIBUTORS-LIST:END -->
 
-This project follows the [all-contributors](https://github.com/all-contributors/all-contributors) specification. Contributions of any kind welcome!
+This project follows the [all-contributors](https://github.com/kentcdodds/all-contributors) specification.
+Contributions of any kind welcome!
