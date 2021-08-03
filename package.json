@@ -8,7 +8,6 @@
     "creamcrop": "src/bin/index.js"
   },
   "scripts": {
-    "test": "mocha .",
     "lint": "eslint src/**"
   },
   "repository": {
