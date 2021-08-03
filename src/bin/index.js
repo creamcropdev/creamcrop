@@ -34,7 +34,7 @@ else if (process.argv[3] == '--help' || process.argv[3] == '-h') {
 
 yargs
     .scriptName('creamcrop')
-    .usage('\u001b[38;5;196mUsage: $0 <command> [options]\u001b[0m')
+    .usage('\u001b[1mUsage: $0 <command> [options]\u001b[0m')
     .command({
         command: 'fetch [url]', 
         desc: 'Fetch a feed.', 
@@ -93,7 +93,7 @@ yargs
         if (commands.includes(command)) {
             return true
         } else if (argv._.length > 0) {
-            throw new Error('Unknown command: '+command)
+            throw new Error('\u001b[38;5;196mUnknown command: '+command+'\u001b[0m')
         } else {
             return true
         }
