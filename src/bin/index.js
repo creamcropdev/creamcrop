@@ -25,15 +25,12 @@ function parse(url) {
     })();
 }
 
-if (process.argv[2] == '--help' || process.argv[2] == '-h') {
+if (process.argv[2] == '--help' && process.argv.length == 2 || process.argv[2] == '-h' && process.argv.length == 2) {
     console.log(boxen('CreamCrop\n  '+metadata.version, {padding: {left: 10, right: 10, bottom: 0, top: 0}, float: 'center', margin: {'bottom': 1},borderStyle: 'round', borderColor: 'cyan'}))
-}
-else if (process.argv[3] == '--help' || process.argv[3] == '-h') {
-    console.log(center('\u001b[1;36mCommand Usage: '+process.argv[2]+'\u001b[0m', 100))
 }
 
 yargs
-    .scriptName('creamcrop')
+    .scriptName('(creamcrop|cream)')
     .usage('\u001b[1mUsage: $0 <command> [options]\u001b[0m')
     .command({
         command: 'fetch [url]', 
