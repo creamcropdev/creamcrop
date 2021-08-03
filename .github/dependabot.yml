@@ -1,0 +1,13 @@
+version: 2
+updates:
+  - package-ecosystem: "npm"
+    directory: "/"
+    schedule:
+      interval: "daily"
+    assignees:
+      - "epispot/maint"
+    commit-message:
+      prefix: "[DEP]"
+      prefix-development: "[DEV/DEP]"
+    labels:
+      - "dependencies"
