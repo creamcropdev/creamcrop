@@ -1,5 +1,5 @@
 <div align='center'>
-<img src="./assets/logo.png">
+<img src="./assets/logo_transp.png">
 </div>
 
 
