@@ -13,7 +13,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/quantum9innovation/creamcrop.git"
+    "url": "git+https://github.com/creamcropdev/creamcrop.git"
   },
   "keywords": [
     "news",
@@ -24,9 +24,9 @@
   "author": "Qlabs (@Quantalabs)",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/quantum9innovation/creamcrop/issues"
+    "url": "https://github.com/creamcropdev/creamcrop/issues"
   },
-  "homepage": "https://github.com/quantum9innovation/creamcrop#readme",
+  "homepage": "https://github.com/creamcropdev/creamcrop#readme",
   "devDependencies": {
     "all-contributors-cli": "^6.20.0",
     "eslint": "^7.32.0"
