@@ -1,5 +1,5 @@
 name: I found a bug
-description: "There's a problem. You need answer. Fill this out."
+description: "There's a problem. Fill this out."
 title: "[Bug]: "
 labels: [bug]
 assignees:
@@ -17,7 +17,7 @@ body:
   - type: textarea
     attributes:
       render: shell
-      label: "How is your shelf configured. Include how you installed, and how you run shelf"
+      label: "How is your creamcrop configured. Include how you installed, and how you run creamcrop"
     validations:
       required: true
   - type: checkboxes
@@ -30,14 +30,9 @@ body:
         - label: OS - Windows - Windows Subsystem for Linux
   - type: input
     attributes:
-      label: Python Version
-      description: Your python version. If you use anaconda, skip this and fill out the next field.
-      placeholder: "3.8.5"
-  - type: input
-    attributes:
-      label: Anaconda Version
-      description: Your anaconda version, and the python version you are using in anaconda. If you use python, fill in the previous field and skip this one.
-      placeholder: "conda 4.9.2 on 3.9 environment."
+      label: NodeJS
+      description: Your NodeJS version
+      placeholder: "Node v14"
   - type: textarea
     attributes:
       render: shell
