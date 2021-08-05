@@ -26,6 +26,8 @@ async function serve(dir) {
       feed.items.push({
         title: data.items[fitem].title,
         link: data.items[fitem].link,
+        feed: data.title,
+        feedlink: data.link,
       });
     }
   }
@@ -46,7 +48,7 @@ async function serve(dir) {
           <ul>
             ${feed.items.map(item => `
               <li>
-                <a href="${item.link}">${item.title}</a>
+                <a href="${item.link}">${item.title}</a> from <a href="${item.feedlink}">${item.feed}</a>
               </li>
             `).join('\n')}
           </ul>
