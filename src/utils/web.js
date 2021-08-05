@@ -1,11 +1,37 @@
 const http = require('http');
+const fs = require('fs');
+const rss = require('./rss');
 
 /**
  * Serve website
  * 
- * @param {Object} feed - RSS Feed Object
+ * @param {Object} dir - Config file directory
 */
-function serve(feed) {
+async function serve(dir) {
+  if (fs.existsSync(dir+'/.creamcroprc') || fs.existsSync(dir+'.creamcroprc.json')) {
+    console.log('Found config file, generating website...')
+  }
+  else {
+    console.log('Directory not found or No Config File: ' + dir);
+    process.exit(1);
+  }
+  let feed = {
+    items: []
+  };
+  
+  let config = JSON.parse(fs.readFileSync(dir+'/.creamcroprc'));
+  for (var x in config.feeds) {
+    let data = await rss.parse(config.feeds[x]);
+    for (var fitem in data.items) {
+      feed.items.push({
+        title: data.items[fitem].title,
+        link: data.items[fitem].link,
+        feed: data.title,
+        feedlink: data.link,
+      });
+    }
+  }
+
   const requestListener = function (req, res) {
     res.writeHead(200, {
       'Content-Type': 'text/html'
@@ -22,7 +48,7 @@ function serve(feed) {
           <ul>
             ${feed.items.map(item => `
               <li>
-                <a href="${item.link}">${item.title}</a>
+                <a href="${item.link}">${item.title}</a> from <a href="${item.feedlink}">${item.feed}</a>
               </li>
             `).join('\n')}
           </ul>
