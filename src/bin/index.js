@@ -4,12 +4,13 @@
 const metadata = require('../utils/metadata')
 const rss = require('../utils/rss')
 const web = require('../utils/web')
+const pkg = require('../../package.json');
 
 // Dependencies
 const boxen = require('boxen');
 const yargs = require('yargs')
 const updateNotifier = require('update-notifier');
-const pkg = require('../../package.json');
+const fs = require('fs');
 
 const notifier = updateNotifier({
 	pkg,
@@ -29,8 +30,19 @@ function version() {
 
 function parse(url) {
     (async () => {  
-        let data = await rss.parse(url)
-        console.log(data)
+        await rss.parse(url) // Check's if Rss is valid
+        console.log("Valid feed... adding to config")
+        if (fs.existsSync('./.creamcroprc')) {
+            let rawconfig = fs.readFileSync('./.creamcroprc', 'utf8')
+            let config = JSON.parse(rawconfig)
+            config.feeds.push(url)
+            fs.writeFileSync('./.creamcroprc', JSON.stringify(config, null, 2))
+        } else {
+            let config = {
+                feeds: [url]
+            }
+            fs.writeFileSync('./.creamcroprc', JSON.stringify(config, null, 2))
+        }
     })();
 }
 
@@ -55,18 +67,17 @@ yargs
         }
     })
     .command({
-        command: 'serve [url]',
-        desc: 'Serves website from RSS feed',
+        command: 'serve [dir]',
+        desc: 'Serves website from config file in [dir].',
         builder: (yargs) => {
-            yargs.positional('url', {
+            yargs.positional('dir', {
                 type: 'string',
-                description: 'The url of the feed to fetch.'
+                description: 'The directory of the config file.'
             })
         },
         handler: function(argv) {
             (async () => {
-                let data = await rss.parse(argv.url)
-                web.serve(data)
+                await web.serve(argv.dir)
             })();
         }
     })
