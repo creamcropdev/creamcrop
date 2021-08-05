@@ -6,15 +6,15 @@ As you might have noticed, creamcrop is still in alpha, as [according to the Sem
 
 Infact, here's a list of things we want to get done before we release `v1`:
 
-- Multiple RSS feeds 
-- Better websites
-- Config files
-- Fast. Fast. Fast. (ie. We want it to be faster.)
-- Filters
-- Git tracking
-- Additional Feed types - atom, JSON
-- Probably a whole lot of bug fixes
-- and other things we haven't thought about yet.
+- [x] ~Multiple RSS feeds~ 
+- [ ] Better websites
+- [x] ~Config files~
+- [ ] Fast. Fast. Fast. (ie. We want it to be faster.)
+- [ ] Filters
+- [ ] Git tracking
+- [ ] Additional Feed types - atom, JSON
+- [ ] Probably a whole lot of bug fixes
+- [ ] and other things we haven't thought about yet.
 
 ## Can I contribute?
 

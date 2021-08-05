@@ -36,7 +36,7 @@ Usage: (creamcrop|cream) <command> [options]
 
 Commands:
   (creamcrop|cream) fetch [url]  Fetch a feed.
-  (creamcrop|cream) serve [url]  Serves website from RSS feed
+  (creamcrop|cream) serve [dir]  Serves website from config file in [dir].
   (creamcrop|cream) about        Displays package info and exits.
 
 Options:
@@ -47,26 +47,23 @@ Options:
 
 ### `fetch [url]`
 
-The `fetch` command fetches a feed and prints a JSON output of the feed. This is useful if you'd like to verify that a feed exists.
+The `fetch` command fetches a feed, check's if it's valid, and adds it to the config file.
+
+?> The config file is a required file if using the [`serve` command](#serve-url). See more info at [config](./config.md)
 
 ```sh
 $ cream fetch https://www.feedforall.com/sample.xml
-{
-  items: [
-    {
-      title: 'RSS Solutions for Restaurants',
-      link: 'http://www.feedforall.com/restaurant.htm',
-      pubDate: 'Tue, 19 Oct 2004 11:09:11 -0400',
-      comments: 'http://www.feedforall.com/forum',
-# and so on...
+Valid feed... adding to config
 ```
 
-### `serve [url]`
+### `serve [dir]`
 
-The `serve` command fetches the URL and gives a HTML display.
+The `serve` command finds the config file in the given directory and serves a website using the configuration specified.
+See [config](./config.md) for more info on the config file.
 
 ```sh
-$ cream serve https://www.feedforall.com/sample.xml
+$ cream serve ./
+Found config file, generating website...
 Server running at http://localhost:8080
 ```
 
@@ -79,7 +76,7 @@ $ cream about
 creamcrop
 A cream-of-the-crop, top-of-the-top, slice-and-chop, absolutely minimalist news getter.
 Qlabs (@Quantalabs)
-0.1.0
+0.2.0
 ```
 
 ## Options
@@ -95,7 +92,7 @@ Usage: (creamcrop|cream) <command> [options]
 
 Commands:
   (creamcrop|cream) fetch [url]  Fetch a feed.
-  (creamcrop|cream) serve [url]  Serves website from RSS feed
+  (creamcrop|cream) serve [dir]  Serves website from config file in [dir].
   (creamcrop|cream) about        Displays package info and exits.
 
 Options:
@@ -120,5 +117,5 @@ Options:
 The version command gives you the version info of the package.
 ```sh
 $ cream --version
-0.1.0
+0.2.0
 ```
