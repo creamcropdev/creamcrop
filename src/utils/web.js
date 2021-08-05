@@ -32,6 +32,15 @@ async function serve(dir) {
     }
   }
 
+  function format(title, link, feedlink, feed) {
+    var format = config.format
+    format = format.replace(/%title%/g, title);
+    format = format.replace(/%link%/g, link);
+    format = format.replace(/%feed%/g, feed);
+    format = format.replace(/%feedlink%/g, feedlink);
+    return format;
+  }
+
   const requestListener = function (req, res) {
     res.writeHead(200, {
       'Content-Type': 'text/html'
@@ -48,7 +57,7 @@ async function serve(dir) {
           <ul>
             ${feed.items.map(item => `
               <li>
-                <a href="${item.link}">${item.title}</a> from <a href="${item.feedlink}">${item.feed}</a>
+                ${format(item.title, item.link, item.feedlink, item.feed)}
               </li>
             `).join('\n')}
           </ul>
