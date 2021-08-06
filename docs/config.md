@@ -16,15 +16,18 @@ There is a simple configuration syntax used in creamcrop.
     "feeds": [
         "feed1__url",
         "feed2_url",
-        "feed3_url"
+        "feed3_url",
+        ...
     ]
 }
 ```
 
-Later on, more parameters will be added.
+Currently, `feeds` is the only required parameter.
 
 ## Valid parameters
 
-| Parameter | Description | Default |
-| --------- | ----------- | ------- |
-|  `feeds`  | Array of feeds to parse | No default. **Required**. |
+| Parameter | Description | Default | Values |
+| --------- | ----------- | ------- | ------ |
+|  `feeds`  | Array of feeds to parse | No default. **Required**. | An array of URLs to feeds |
+| `format` | The format of the output. Each value should be surrounded by `%`. | `<a href="%link%">%item%</a> from <a href="%feedlink%">%feed%</a>` | `%feed%`- The name of the RSS feed the item is in. <br> `%feedlink%` - The RSS feed's link that the item is in. <br> `%item%` - The name of the RSS feed Item. <br> `%itemlink%` Link to the item. |
+| `custom` | A custom HTML template. Inside the HTML, use `%feed%`, which will be replaced by the content of the feed. |  A basic HTML page. | The relative path to the HTML template file |
