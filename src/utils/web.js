@@ -33,9 +33,6 @@ async function serve(dir) {
   }
 
   function format(title, link, feedlink, feed) {
-    process.stdout.cursorTo(0);
-    process.stdout.clearLine();
-    process.stdout.write(`Going through ${title}...`)
     if (config.format !== undefined) {
       var format = config.format
       format = format.replace(/%title%/g, title);
