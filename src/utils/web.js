@@ -8,7 +8,7 @@ const rss = require('./rss');
  * @param {Object} dir - Config file directory
 */
 async function serve(dir) {
-  if (fs.existsSync(dir+'/.creamcroprc') || fs.existsSync(dir+'.creamcroprc.json')) {
+  if (fs.existsSync(dir+'/.creamcroprc') || fs.existsSync(dir+'.creamcroprc')) {
     console.log('Found config file, generating website...')
   }
   else {
@@ -33,19 +33,52 @@ async function serve(dir) {
   }
 
   function format(title, link, feedlink, feed) {
-    var format = config.format
-    format = format.replace(/%title%/g, title);
-    format = format.replace(/%link%/g, link);
-    format = format.replace(/%feed%/g, feed);
-    format = format.replace(/%feedlink%/g, feedlink);
-    return format;
+    process.stdout.cursorTo(0);
+    process.stdout.clearLine();
+    process.stdout.write(`Going through ${title}...`)
+    if (config.format !== undefined) {
+      var format = config.format
+      format = format.replace(/%title%/g, title);
+      format = format.replace(/%link%/g, link);
+      format = format.replace(/%feed%/g, feed);
+      format = format.replace(/%feedlink%/g, feedlink);
+      return format;
+    }
+    else {
+      return `<a href="${link}">${title}</a> from <a href="${feedlink}">${feed}</a>`;
+    }
   }
 
-  const requestListener = function (req, res) {
-    res.writeHead(200, {
-      'Content-Type': 'text/html'
-    });
-    const html = `
+  let html = ''
+
+  if (config.custom !== undefined) {
+    console.log('\nParsing custom HTML...');
+
+    let customconf = ''
+    if (fs.existsSync(dir+config.custom)) {
+      customconf = fs.readFileSync(dir+config.custom, {encoding:'utf8', flag:'r'});
+    } 
+    else if (fs.existsSync(dir+'/'+config.custom)) {
+      customconf = fs.readFileSync(dir+'/'+config.custom, {encoding:'utf8', flag:'r'});
+    } 
+    else {
+      console.log('Custom file not found: ' + dir+config.custom);
+      process.exit(1);
+    }
+
+    console.log('\nParsing RSS feed(s)...');
+    customconf = customconf.replace(/%feed%/g, feed.items.map(item => `
+      <li>
+        ${format(item.title, item.link, item.feedlink, item.feed)}
+      </li>
+      `).join('\n'));
+
+    html = customconf
+  }
+
+  else {
+    console.log('\nParsing RSS feed(s)...\n');
+    html = `
       <!DOCTYPE html>
       <html>
         <head>
@@ -64,12 +97,18 @@ async function serve(dir) {
         </body>
       </html>
     `;
+  }
+
+  const requestListener = function (req, res) {
+    res.writeHead(200, {
+      'Content-Type': 'text/html'
+    });
     res.end(html);
   }
   
   const server = http.createServer(requestListener);
   server.listen(8080);
-  console.log('Server running at http://localhost:8080')
+  console.log('\n\nServer running at http://localhost:8080')
 }
 
 exports.serve = serve
