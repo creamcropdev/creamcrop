@@ -73,11 +73,29 @@ yargs
             yargs.positional('dir', {
                 type: 'string',
                 description: 'The directory of the config file.'
+            }),
+            yargs.option('port', {
+                alias: 'p',
+                type: 'number',
+                default: 8080,
+                description: 'The port to run the server on.'
+            }),
+            yargs.option('host', {
+                alias: 'h',
+                type: 'string',
+                default: 'localhost',
+                description: 'The host to run the server on.'
+            }),
+            yargs.option('interval', {
+                alias: 'i',
+                type: 'number',
+                default: 300000,
+                description: 'The interval to check for new posts. Defaults to 5 minutes.'
             })
         },
         handler: function(argv) {
             (async () => {
-                await web.serve(argv.dir)
+                await web.serve(argv.dir, argv.port, argv.host, argv.interval)
             })();
         }
     })
@@ -121,6 +139,10 @@ yargs
     })
     .argv
 
+process.on('SIGINT', function() {
+    console.log('\nExiting...')
+    process.exit(0)
+});
 
 exports.about = about
 exports.version = version

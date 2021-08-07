@@ -76,7 +76,7 @@ $ cream about
 creamcrop
 A cream-of-the-crop, top-of-the-top, slice-and-chop, absolutely minimalist news getter.
 Qlabs (@Quantalabs)
-0.3.0
+0.4.0
 ```
 
 ## Options
@@ -117,5 +117,5 @@ Options:
 The version command gives you the version info of the package.
 ```sh
 $ cream --version
-0.3.0
+0.4.0
 ```
