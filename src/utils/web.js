@@ -38,7 +38,7 @@ async function serve(dir) {
     return new Date(b.pubdate) - new Date(a.pubdate);
   });
 
-  function format(title, link, feedlink, feed, pubdate) {
+  function format(title, link, feedlink, feed, pubdate, add="", end="") {
     if (config.format !== undefined) {
       var format = config.format
       format = format.replace(/%title%/g, title);
@@ -49,7 +49,7 @@ async function serve(dir) {
       return format;
     }
     else {
-      return `<a href="${link}">${title}</a> from <a href="${feedlink}">${feed}</a>`;
+      return `${add}<a href="${link}">${title}</a> from <a href="${feedlink}">${feed}</a>${end}`;
     }
   }
 
@@ -91,9 +91,7 @@ async function serve(dir) {
           <sub>Your news feed from creamcrop, the cream-of-the-crop, top-of-the-top, slice-and-chop, absolutely minimalist news getter.</sub>
           <ul>
             ${feed.items.map(item => `
-              <li>
-                ${format(item.title, item.link, item.feedlink, item.feed, item.pubdate)} 
-              </li>
+                ${format(item.title, item.link, item.feedlink, item.feed, item.pubdate, '<li>', '</li>')}
             `).join('\n')}
           </ul>
         </body>
