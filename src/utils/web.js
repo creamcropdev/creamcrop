@@ -28,17 +28,24 @@ async function serve(dir) {
         link: data.items[fitem].link,
         feed: data.title,
         feedlink: data.link,
+        pubdate: data.items[fitem].isoDate
       });
     }
   }
 
-  function format(title, link, feedlink, feed) {
+  // Sort all the items in feed.items by date
+  feed.items = feed.items.sort(function(a, b) {
+    return new Date(b.pubdate) - new Date(a.pubdate);
+  });
+
+  function format(title, link, feedlink, feed, pubdate) {
     if (config.format !== undefined) {
       var format = config.format
       format = format.replace(/%title%/g, title);
       format = format.replace(/%link%/g, link);
       format = format.replace(/%feed%/g, feed);
       format = format.replace(/%feedlink%/g, feedlink);
+      format = format.replace(/%pubdate%/g, new Date(pubdate).toLocaleDateString());
       return format;
     }
     else {
@@ -65,9 +72,7 @@ async function serve(dir) {
 
     console.log('\nParsing RSS feed(s)...');
     customconf = customconf.replace(/%feed%/g, feed.items.map(item => `
-      <li>
-        ${format(item.title, item.link, item.feedlink, item.feed)}
-      </li>
+        ${format(item.title, item.link, item.feedlink, item.feed, item.pubdate)}
       `).join('\n'));
 
     html = customconf
