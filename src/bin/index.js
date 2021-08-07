@@ -139,6 +139,10 @@ yargs
     })
     .argv
 
+process.on('SIGINT', function() {
+    console.log('\nExiting...')
+    process.exit(0)
+});
 
 exports.about = about
 exports.version = version
