@@ -20,7 +20,7 @@ Usage: (creamcrop|cream) <command> [options]
 
 Commands:
   (creamcrop|cream) fetch [url]  Fetch a feed.
-  (creamcrop|cream) serve [url]  Serves website from RSS feed
+  (creamcrop|cream) serve [dir]  Serves website from config file in [dir].
   (creamcrop|cream) about        Displays package info and exits.
 
 Options:

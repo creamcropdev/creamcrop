@@ -1,3 +1,13 @@
+# v0.4.0
+
+Adds:
+    - Improved Web Design
+    - Auto-update RSS feeds
+    - Custom port and host values for `cream serve`
+    - Add RSS sorting by date, independent of feed
+    - Add `%pubdate%` option for format options
+    - Add `%update%` option for website templates which get's replaced with an auto-update script 
+
 # v0.3.0
 
 Adds:
