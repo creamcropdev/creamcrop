@@ -92,7 +92,7 @@ async function serve(dir) {
           <ul>
             ${feed.items.map(item => `
               <li>
-                ${format(item.title, item.link, item.feedlink, item.feed)}
+                ${format(item.title, item.link, item.feedlink, item.feed, item.pubdate)} 
               </li>
             `).join('\n')}
           </ul>
