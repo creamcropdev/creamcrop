@@ -29,6 +29,10 @@ jobs:
           node-version: 14
           registry-url: https://npm.pkg.github.com/
           scope: '@creamcropdev'
+      - name: Update package.json with scope
+        run: | 
+          rm -rf ./package.json
+          mv ./gpr-package.json ./package.json
       - run: npm publish --access=public
         env:
           NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
