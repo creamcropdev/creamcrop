@@ -1,3 +1,8 @@
+# v0.5.0
+
+Adds:
+    - Read/Unread filtering.
+
 # v0.4.0
 
 Adds:
