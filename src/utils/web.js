@@ -2,6 +2,7 @@ const http = require('http');
 const fs = require('fs');
 const rss = require('./rss');
 const metadata = require('./metadata');
+const url = require('url')
 
 /**
  * Serve website
@@ -22,10 +23,31 @@ async function serve(dir, port, host, interval) {
       items: []
     };
     
+    let read = {
+      items: []
+    }
+
     let config = JSON.parse(fs.readFileSync(dir+'/.creamcroprc'));
+
+    // To prevent an error, add a empty "read" list to config if it doesn't exist
+    if (!config.read) {
+      config.read = [];
+    }
+
     for (var x in config.feeds) {
       let data = await rss.parse(config.feeds[x]);
       for (var fitem in data.items) {
+        // If data.items[fitem].link is in config.read list, then add it to read.items and skip the iteration
+        if (config.read.indexOf(data.items[fitem].link) != -1) {
+          read.items.push({
+            title: data.items[fitem].title,
+            link: data.items[fitem].link,
+            feed: data.title,
+            feedlink: data.link,
+            pubdate: data.items[fitem].isoDate
+          });
+          continue
+        }
         feed.items.push({
           title: data.items[fitem].title,
           link: data.items[fitem].link,
@@ -38,6 +60,11 @@ async function serve(dir, port, host, interval) {
 
     // Sort all the items in feed.items by date
     feed.items = feed.items.sort(function(a, b) {
+      return new Date(b.pubdate) - new Date(a.pubdate);
+    });
+
+    // Sort all the items in read.items by date
+    read.items = read.items.sort(function(a, b) {
       return new Date(b.pubdate) - new Date(a.pubdate);
     });
 
@@ -75,7 +102,7 @@ async function serve(dir, port, host, interval) {
 
       console.log('\nParsing RSS feed(s)...');
       customconf = customconf.replace(/%feed%/g, feed.items.map(item => `
-          ${format(item.title, item.link, item.feedlink, item.feed, item.pubdate)}
+          ${format(item.title, item.link, item.feedlink, item.feed, item.pubdate, `<div onClick="markRead(${item.link})">`, '</div>')}
         `).join('\n'));
       
         // Replace %update% with automatic reloading script with interval in customconf
@@ -84,6 +111,11 @@ async function serve(dir, port, host, interval) {
             setTimeout(function(){
               window.location.reload(1);
             }, ${Number(interval)});
+
+            // Add function markRead to make API call to mark "item" as read at /markRead
+            function markRead(item) {
+              fetch('/markRead?id=' + item)
+            }
           </script>
         `);
             
@@ -113,9 +145,23 @@ async function serve(dir, port, host, interval) {
               <br>
               <ol style="width: 100vw; text-align: center; list-style-position: inside;">
                 ${feed.items.map(item => `
-                    ${format(item.title, item.link, item.feedlink, item.feed, item.pubdate, '<li>', '</li>')}
+                    ${format(item.title, item.link, item.feedlink, item.feed, item.pubdate, `<li onClick="markRead('${item.link}')">`, '</li>')}
                 `).join('\n')}
               </ol style="width: 100vw; text-align: center;">
+            </section>
+            <br><br>
+            <!-- Add "read" section -->
+            <section id="read-section">
+              <h1 style="width: 100vw; text-align: center;">Already Read</h1>
+              <p style="margin: auto; text-align: center;">The items you have already read.</p>
+              <br>
+              <hr style="width: 50vw; margin: auto;">
+              <br>
+              <ol style="width: 100vw; text-align: center; list-style-position: inside;">
+                ${read.items.map(item => `
+                    ${format(item.title, item.link, item.feedlink, item.feed, item.pubdate, `<li>`, '</li>')}
+                `).join('\n')}
+              </ol>
             </section>
             <br><br>
             <!-- Add footer -->
@@ -126,6 +172,11 @@ async function serve(dir, port, host, interval) {
               setTimeout(function(){
                 window.location.reload(1);
               }, ${Number(interval)});
+
+              // Add function markRead to make API call to mark "item" as read at /markRead
+              function markRead(item) {
+                fetch('/markRead?id=' + item)
+              }
             </script>
           </body>
         </html>
@@ -145,6 +196,24 @@ async function serve(dir, port, host, interval) {
     if (req.url === '/') {
       html = await generate(dir);
       res.end(html);
+    }
+
+    if (url.parse(req.url, true).pathname === '/markRead') {
+      console.log('Recieved API Request, marking item as read...');
+      let id = url.parse(req.url, true).query.id
+      
+      // Append `id` to .creamcroprc's read section
+      let read = JSON.parse(fs.readFileSync(dir+'/.creamcroprc', {encoding:'utf8', flag:'r'}))
+      
+      // Check if the read section exists in the .creamcroprc file
+      if (read.read === undefined) {
+        read.read = []
+      }
+
+      // Append `id` to the read section
+      read.read.push(id)
+      fs.writeFileSync(dir+'/.creamcroprc', JSON.stringify(read, null, 2), {encoding:'utf8', flag:'w'})
+      console.log('Marked item as read.');
     }
   }
   
