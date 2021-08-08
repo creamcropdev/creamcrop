@@ -63,6 +63,11 @@ async function serve(dir, port, host, interval) {
       return new Date(b.pubdate) - new Date(a.pubdate);
     });
 
+    // Sort all the items in read.items by date
+    read.items = read.items.sort(function(a, b) {
+      return new Date(b.pubdate) - new Date(a.pubdate);
+    });
+
     function format(title, link, feedlink, feed, pubdate, add="", end="") {
       if (config.format !== undefined) {
         var format = config.format
