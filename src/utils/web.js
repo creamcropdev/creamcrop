@@ -70,7 +70,7 @@ async function serve(dir, port, host, interval) {
 
     function format(title, link, feedlink, feed, pubdate, add="", end="") {
       if (config.format !== undefined) {
-        var format = config.format
+        var format = `${add}${config.format}${end}`
         format = format.replace(/%title%/g, title);
         format = format.replace(/%link%/g, link);
         format = format.replace(/%feed%/g, feed);
