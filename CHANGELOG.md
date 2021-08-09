@@ -1,3 +1,7 @@
+# v0.5.2
+
+Add support for custom formats with read/unread indicators.
+
 # v0.5.1
 
 Patch update which fixes a server bug.
