@@ -191,7 +191,6 @@ async function serve(dir, port, host, interval) {
     res.writeHead(200, {
       'Content-Type': 'text/html'
     });
-    res.end(html);
 
     if (req.url === '/') {
       html = await generate(dir);
