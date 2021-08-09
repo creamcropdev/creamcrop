@@ -1,3 +1,7 @@
+# v0.5.1
+
+Patch update which fixes a server bug.
+
 # v0.5.0
 
 Adds:
