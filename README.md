@@ -57,7 +57,7 @@ npm run lint
   
 ### License
 
-The creamcrop project is licensed under the GPL-3.0 license.
+The creamcrop project is licensed under the MIT license.
 
   
 ### Documentation
