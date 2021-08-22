@@ -10,6 +10,10 @@ const url = require('url')
  * @param {Object} dir - Config file directory
 */
 async function serve(dir, port, host, interval) {
+  // Clear the console
+  process.stdout.write('\x1Bc');
+
+  
   if (fs.existsSync(dir+'/.creamcroprc') || fs.existsSync(dir+'.creamcroprc')) {
     console.log('Found config file, generating website...')
   }
@@ -38,8 +42,15 @@ async function serve(dir, port, host, interval) {
       let data = await rss.parse(config.feeds[x]);
       for (var fitem in data.items) {
         // Check if the item matches the query, if query is not null. If the item does not match the query, skip the iteration
-        if (query != null && !(data.items[fitem].title.toLowerCase().indexOf(query.toLowerCase()) != -1)) {
-          continue;
+        if (query != null) {
+          // If the item's title, description, link, feed, feedlink, or pubdate does not match the query, skip the iteration
+          if (data.items[fitem].title.toLowerCase().indexOf(query.toLowerCase()) == -1 &&
+              data.items[fitem].link.toLowerCase().indexOf(query.toLowerCase()) == -1 &&
+              data.title.toLowerCase().indexOf(query.toLowerCase()) == -1 &&
+              data.link.toLowerCase().indexOf(query.toLowerCase()) == -1 &&
+              data.items[fitem].isoDate.toLowerCase().indexOf(query.toLowerCase()) == -1) {
+            continue;
+          }
         }
         
         // If data.items[fitem].link is in config.read list, then add it to read.items and skip the iteration
