@@ -162,11 +162,16 @@ async function serve(dir, port, host, interval) {
           </head>
           <body style="font-family: 'Georama', sans-serif; margin: 0; border: none; padding: 0; overflow-x: hidden;">
             <section id="main-content">
-              <!-- Search box -->
-              <form action="/search" method="get">
-                <input type="text" name="q" placeholder="Search" />
-                <input type="submit" value="Search" />
-              </form>
+              <div class="container" style="margin: 10px;">
+                <!-- Search box -->
+                <form action="/search" method="get">
+                  <input type="text" name="q" placeholder="Search" />
+                  <input type="submit" value="Search" />
+                </form>
+                <!-- Home Button -->
+                <a href="/">Home</a>
+              </div>
+
               <!-- RSS feed -->
               <h1 style="width: 100vw; text-align: center;">Your News Feed</h1>
               <p style="margin: auto; text-align: center;">Your news feed from creamcrop, the cream-of-the-crop, top-of-the-top, slice-and-chop, absolutely minimalist news getter.</p>
