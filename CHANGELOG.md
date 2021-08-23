@@ -1,3 +1,8 @@
+# v0.6.0
+
+Adds:
+    - Custom filtering and searching
+
 # v0.5.1
 
 Patch update which fixes a server bug.
