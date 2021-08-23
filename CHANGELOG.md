@@ -1,3 +1,8 @@
+# v0.6.0
+
+Adds:
+    - Custom filtering and searching
+   
 # v0.5.2
 
 Add support for custom formats with read/unread indicators.

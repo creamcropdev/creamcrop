@@ -10,6 +10,10 @@ const url = require('url')
  * @param {Object} dir - Config file directory
 */
 async function serve(dir, port, host, interval) {
+  // Clear the console
+  process.stdout.write('\x1Bc');
+
+  
   if (fs.existsSync(dir+'/.creamcroprc') || fs.existsSync(dir+'.creamcroprc')) {
     console.log('Found config file, generating website...')
   }
@@ -18,7 +22,7 @@ async function serve(dir, port, host, interval) {
     process.exit(1);
   }
 
-  async function generate(dir) {
+  async function generate(dir, query=null) {
     let feed = {
       items: []
     };
@@ -37,6 +41,18 @@ async function serve(dir, port, host, interval) {
     for (var x in config.feeds) {
       let data = await rss.parse(config.feeds[x]);
       for (var fitem in data.items) {
+        // Check if the item matches the query, if query is not null. If the item does not match the query, skip the iteration
+        if (query != null) {
+          // If the item's title, description, link, feed, feedlink, or pubdate does not match the query, skip the iteration
+          if (data.items[fitem].title.toLowerCase().indexOf(query.toLowerCase()) == -1 &&
+              data.items[fitem].link.toLowerCase().indexOf(query.toLowerCase()) == -1 &&
+              data.title.toLowerCase().indexOf(query.toLowerCase()) == -1 &&
+              data.link.toLowerCase().indexOf(query.toLowerCase()) == -1 &&
+              data.items[fitem].isoDate.toLowerCase().indexOf(query.toLowerCase()) == -1) {
+            continue;
+          }
+        }
+        
         // If data.items[fitem].link is in config.read list, then add it to read.items and skip the iteration
         if (config.read.indexOf(data.items[fitem].link) != -1) {
           read.items.push({
@@ -118,6 +134,14 @@ async function serve(dir, port, host, interval) {
             }
           </script>
         `);
+
+        // Replace %search% with search box with search in customconf
+        customconf = customconf.replace(/%search%/g, `
+          <form action="/search" method="get">
+            <input type="text" name="q" placeholder="Search" />
+            <input type="submit" value="Search" />
+          </form>
+        `);
             
 
       html = customconf
@@ -138,6 +162,17 @@ async function serve(dir, port, host, interval) {
           </head>
           <body style="font-family: 'Georama', sans-serif; margin: 0; border: none; padding: 0; overflow-x: hidden;">
             <section id="main-content">
+              <div class="container" style="margin: 10px;">
+                <!-- Search box -->
+                <form action="/search" method="get">
+                  <input type="text" name="q" placeholder="Search" />
+                  <input type="submit" value="Search" />
+                </form>
+                <!-- Home Button -->
+                <a href="/">Home</a>
+              </div>
+
+              <!-- RSS feed -->
               <h1 style="width: 100vw; text-align: center;">Your News Feed</h1>
               <p style="margin: auto; text-align: center;">Your news feed from creamcrop, the cream-of-the-crop, top-of-the-top, slice-and-chop, absolutely minimalist news getter.</p>
               <br>
@@ -213,6 +248,18 @@ async function serve(dir, port, host, interval) {
       read.read.push(id)
       fs.writeFileSync(dir+'/.creamcroprc', JSON.stringify(read, null, 2), {encoding:'utf8', flag:'w'})
       console.log('Marked item as read.');
+    }
+
+
+    if (url.parse(req.url, true).pathname === '/search') {
+      console.log('Recieved API Request, searching...');
+      
+      // Get query from URL
+      let query = url.parse(req.url, true).query.q
+
+      // Get items from RSS feed
+      html = await generate(dir, query);
+      res.end(html);
     }
   }
   

@@ -1,6 +1,6 @@
 {
   "name": "@creamcropdev/creamcrop",
-  "version": "0.5.2",
+  "version": "0.6.0",
   "description": "A cream-of-the-crop, top-of-the-top, slice-and-chop, absolutely minimalist news getter.",
   "main": "src/index.js",
   "bin": {

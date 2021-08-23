@@ -7,11 +7,11 @@ As you might have noticed, creamcrop is still in alpha, as [according to the Sem
 Infact, here's a list of things we want to get done before we release `v1`:
 
 - [x] ~Multiple RSS feeds~ 
-- [ ] Better websites
+- [x] ~Better websites~
 - [x] ~Config files~
 - [ ] Fast. Fast. Fast. (ie. We want it to be faster.)
-- [ ] Filters
-- [ ] Git tracking
+- [x] ~Filters~
+- [ ] Git tracking (Add git commit history to your feeds)
 - [ ] Additional Feed types - atom, JSON
 - [ ] Probably a whole lot of bug fixes
 - [ ] and other things we haven't thought about yet.
@@ -19,7 +19,7 @@ Infact, here's a list of things we want to get done before we release `v1`:
 ## Can I contribute?
 
 Yep! You can read the [contributing guidelines](https://github.com/creamcropdev/creamcrop/blob/main/CONTRIBUTING.md). You can easily set-up your dev enviornment with:
-```sh
+```bash
 git clone https://github.com/creamcropdev/creamcrop.git # or gh repo clone creamcropdev/creamcrop
 cd creamcrop
 npm install 
