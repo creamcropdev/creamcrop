@@ -62,8 +62,11 @@ Positionals:
   url  The url of the feed to fetch.                                    [string]
 
 Options:
-  --help     Show help                                                 [boolean]
-  --version  Show version number                                       [boolean]
+      --help     Show help                                             [boolean]
+      --version  Show version number                                   [boolean]
+  -t, --type     The type of feed. Accepted values are "json", "rss", or "none"
+                 for creamcrop to automatically find the type.
+                                                      [string] [default: "none"]
 ```
 Example:
 ```sh
@@ -110,7 +113,7 @@ $ cream about
 creamcrop
 A cream-of-the-crop, top-of-the-top, slice-and-chop, absolutely minimalist news getter.
 Qlabs (@Quantalabs)
-0.6.0
+0.7.0
 ```
 
 ## Global Options
@@ -151,5 +154,5 @@ Options:
 The version command gives you the version info of the package.
 ```sh
 $ cream --version
-0.6.0
+0.7.0
 ```
