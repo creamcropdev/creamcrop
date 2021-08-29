@@ -1,3 +1,8 @@
+# v0.7.0
+
+Adds:
+    - JSON feed support, with new package dep: `@creamcropdev/json`
+
 # v0.6.0
 
 Adds:
