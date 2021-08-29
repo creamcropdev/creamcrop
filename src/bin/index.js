@@ -11,15 +11,12 @@ const boxen = require('boxen');
 const yargs = require('yargs')
 const updateNotifier = require('update-notifier');
 const fs = require('fs');
+const jsonparser = require('@creamcropdev/json')
 
-const notifier = updateNotifier({
-	pkg,
-	updateCheckInterval: 1000 * 60 * 60 * 24 * 7 // 1 week
-});
+const notifier = updateNotifier({pkg});
 
-if (notifier.update) {
-	console.log(`Update available: ${notifier.update.latest}`);
-}
+notifier.notify();
+
 function about() {
     console.log(metadata.about)
 }
@@ -28,18 +25,42 @@ function version() {
     console.log(metadata.version)
 }
 
-function parse(url) {
-    (async () => {  
-        await rss.parse(url) // Check's if Rss is valid
+function parse(url, type) {
+    (async () => { 
+        if (type === 'none') {
+            try {
+                await rss.parse(url) // Check's if Rss is valid
+            }
+            catch {
+                await jsonparser.parse(url) // Check's if Json is valid
+            }
+        }
+        else if (type === 'rss') {
+            await rss.parse(url)
+        }
+        else if (type === 'json') {
+            await jsonparser.parse(url)
+        }
         console.log("Valid feed... adding to config")
         if (fs.existsSync('./.creamcroprc')) {
             let rawconfig = fs.readFileSync('./.creamcroprc', 'utf8')
             let config = JSON.parse(rawconfig)
-            config.feeds.push(url)
+            if (type != 'none') {
+                config.feeds.push([url, type])
+            }
+            else {
+                config.feeds.push(url)
+            }
             fs.writeFileSync('./.creamcroprc', JSON.stringify(config, null, 2))
         } else {
             let config = {
-                feeds: [url]
+                feeds: []
+            }
+            if (type != 'none') {
+                config.feeds.push([url, type])
+            }
+            else {
+                config.feeds.push(url)
             }
             fs.writeFileSync('./.creamcroprc', JSON.stringify(config, null, 2))
         }
@@ -60,10 +81,16 @@ yargs
             yargs.positional('url', {
                 type: 'string',
                 description: 'The url of the feed to fetch.'
+            }),
+            yargs.option('type', {
+                alias: 't',
+                type: 'string',
+                description: 'The type of feed. Accepted values are "json", "rss", or "none" for creamcrop to automatically find the type.',
+                default: 'none'
             })
         }, 
         handler: function(argv) {
-            parse(argv.url)
+            parse(argv.url, argv.type)
         }
     })
     .command({

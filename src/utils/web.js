@@ -2,7 +2,8 @@ const http = require('http');
 const fs = require('fs');
 const rss = require('./rss');
 const metadata = require('./metadata');
-const url = require('url')
+const url = require('url');
+const jsonparser = require('@creamcropdev/json')
 
 /**
  * Serve website
@@ -39,7 +40,31 @@ async function serve(dir, port, host, interval) {
     }
 
     for (var x in config.feeds) {
-      let data = await rss.parse(config.feeds[x]);
+      let data;
+
+      if (Array.isArray(config.feeds[x])) {
+        if (config.feeds[x][1] == 'rss') {
+          data = await rss.parse(config.feeds[x][0]);
+        }
+        else if (config.feeds[x][1] == 'json') {
+          data = await jsonparser.parse(config.feeds[x][0]);
+        }
+      }
+      else if (config.feeds[x].endsWith('.rss')) {
+        data = await rss.parse(config.feeds[x]);
+      }
+      else if (config.feeds[x].endsWith('.json')) {
+          data = await jsonparser.parse(config.feeds[x]);
+      }
+      else {
+        try {
+          data = await jsonparser.parse(config.feeds[x]);
+        }
+        catch {
+          data = await rss.parse(config.feeds[x]);
+        }
+      }
+
       for (var fitem in data.items) {
         // Check if the item matches the query, if query is not null. If the item does not match the query, skip the iteration
         if (query != null) {
