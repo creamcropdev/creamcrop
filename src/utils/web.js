@@ -145,6 +145,10 @@ async function serve(dir, port, host, interval) {
       customconf = customconf.replace(/%feed%/g, feed.items.map(item => `
           ${format(item.title, item.link, item.feedlink, item.feed, item.pubdate, `<div onClick="markRead(${item.link})">`, '</div>')}
         `).join('\n'));
+
+        customconf = customconf.replace(/%read%/g, read.items.map(item => `
+          ${format(item.title, item.link, item.feedlink, item.feed, item.pubdate, `<div>`, `</div>`)}
+        `).join('\n'));
       
         // Replace %update% with automatic reloading script with interval in customconf
         customconf = customconf.replace(/%update%/g, `
