@@ -1,3 +1,8 @@
+# v0.8.0
+
+Adds:
+    - `%read%` option for already read items in custom HTML
+
 # v0.7.0
 
 Adds:
