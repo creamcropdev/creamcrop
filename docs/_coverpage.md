@@ -2,7 +2,7 @@
 
 <br><br>
 
-# Creamcrop <small>v0.7.0</small> 
+# Creamcrop <small>v0.8.0</small> 
 
 > A cream-of-the-crop, top-of-the-top, slice-and-chop, absolutely minimalist news getter
 
