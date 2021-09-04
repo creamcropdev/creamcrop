@@ -99,14 +99,26 @@ async function serve(dir, port, host, interval) {
       }
     }
 
-    // Sort all the items in feed.items by date
+    // Sort all the items in feed.items by date, or by function in config.sort, if it exists
     feed.items = feed.items.sort(function(a, b) {
-      return new Date(b.pubdate) - new Date(a.pubdate);
+      if (config.sort) {
+        const sortFunc = require(config.sort);
+        return sortFunc(a, b);
+      }
+      else {
+        return new Date(b.pubdate) - new Date(a.pubdate);
+      }
     });
 
-    // Sort all the items in read.items by date
+    // Sort all the items in read.items by date, or by function in config.sort, if it exists
     read.items = read.items.sort(function(a, b) {
-      return new Date(b.pubdate) - new Date(a.pubdate);
+      if (config.sort) {
+        const sortFunc = require(config.sort);
+        return sortFunc(a, b);
+      }
+      else {
+        return new Date(b.pubdate) - new Date(a.pubdate);
+      }
     });
 
     function format(title, link, feedlink, feed, pubdate, add="", end="") {
@@ -149,6 +161,33 @@ async function serve(dir, port, host, interval) {
         customconf = customconf.replace(/%read%/g, read.items.map(item => `
           ${format(item.title, item.link, item.feedlink, item.feed, item.pubdate, `<div>`, `</div>`)}
         `).join('\n'));
+
+        // if %sort% is found, replace it with all the items in feed.items and read.items, sorted by the function in config.sort, or by date, if it doesn't exist
+        customconf = customconf.replace(/%sort%/g, function() {
+          if (config.sort) {
+            const sortFunc = require(config.sort);
+            // Combine feed.items and read.items
+            let items = feed.items.concat(read.items);
+            // Sort the items
+            items = items.sort(sortFunc);
+            // Return the items in HTML format
+            return items.map(item => `
+              ${format(item.title, item.link, item.feedlink, item.feed, item.pubdate, `<div onClick="markRead(${item.link})">`, '</div>')}
+            `).join('\n');
+          }
+          else {
+            // Combine feed.items and read.items
+            let items = feed.items.concat(read.items);
+            // Sort the items
+            items = items.sort(function(a, b) {
+              return new Date(b.pubdate) - new Date(a.pubdate);
+            });
+            // Return the items in HTML format
+            return items.map(item => `
+              ${format(item.title, item.link, item.feedlink, item.feed, item.pubdate, `<div onClick="markRead(${item.link})">`, '</div>')}
+            `).join('\n');
+          }
+        });
       
         // Replace %update% with automatic reloading script with interval in customconf
         customconf = customconf.replace(/%update%/g, `
