@@ -99,14 +99,26 @@ async function serve(dir, port, host, interval) {
       }
     }
 
-    // Sort all the items in feed.items by date
+    // Sort all the items in feed.items by date, or by function in config.sort, if it exists
     feed.items = feed.items.sort(function(a, b) {
-      return new Date(b.pubdate) - new Date(a.pubdate);
+      if (config.sort) {
+        const sortFunc = require(config.sort);
+        return sortFunc(a, b);
+      }
+      else {
+        return new Date(b.pubdate) - new Date(a.pubdate);
+      }
     });
 
-    // Sort all the items in read.items by date
+    // Sort all the items in read.items by date, or by function in config.sort, if it exists
     read.items = read.items.sort(function(a, b) {
-      return new Date(b.pubdate) - new Date(a.pubdate);
+      if (config.sort) {
+        const sortFunc = require(config.sort);
+        return sortFunc(a, b);
+      }
+      else {
+        return new Date(b.pubdate) - new Date(a.pubdate);
+      }
     });
 
     function format(title, link, feedlink, feed, pubdate, add="", end="") {
