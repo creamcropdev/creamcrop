@@ -67,7 +67,7 @@ function parse(url, type) {
     })();
 }
 
-if (process.argv[2] == '--help' && process.argv.length == 2 || process.argv[2] == '-h' && process.argv.length == 2) {
+if (process.argv[2] == '--help' && process.argv.length == 3 || process.argv[2] == '-h' && process.argv.length == 3) {
     console.log(boxen('CreamCrop\n  '+metadata.version, {padding: {left: 10, right: 10, bottom: 0, top: 0}, float: 'center', margin: {'bottom': 1},borderStyle: 'round', borderColor: 'cyan'}))
 }
 
