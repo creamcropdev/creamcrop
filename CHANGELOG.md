@@ -1,3 +1,14 @@
+# v0.10.0
+
+**BREAKING CHANGES:**
+- Converts package to ESM compeltely. This will not affect the CLI, simply usage in code, which doesn't have many features. 
+
+# v0.9.0
+
+Adds:
+- Add custom sorting of items
+    - Add `%sort%` for custom sorting in custom HTML
+
 # v0.8.0
 
 Adds:
