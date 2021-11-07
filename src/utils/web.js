@@ -1,9 +1,9 @@
-const http = require('http');
-const fs = require('fs');
-const rss = require('./rss');
-const metadata = require('./metadata');
-const url = require('url');
-const jsonparser = require('@creamcropdev/json')
+import * as http from 'http';
+import * as fs from 'fs';
+import * as rss from './rss.js';
+import * as metadata from './metadata.js';
+import * as url from 'url';
+import * as jsonparser from '@creamcropdev/json'
 
 /**
  * Serve website
@@ -337,4 +337,4 @@ async function serve(dir, port, host, interval) {
   });
 }
 
-exports.serve = serve
+export { serve }

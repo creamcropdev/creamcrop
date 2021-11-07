@@ -1,4 +1,6 @@
-const package = require('../../package.json')
+import { createRequire } from "module";
+const require = createRequire(import.meta.url);
+let pkg = require("../../package.json");
 
-exports.version = package.version
-exports.about = `${package.name}\n${package.description}\n${package.author}\n${package.version}`
+export var version = pkg.version
+export var about =  `${pkg.name}\n${pkg.description}\n${pkg.author}\n${pkg.version}`

@@ -1,17 +1,19 @@
 #!/usr/bin/env node
 
 // Local
-const metadata = require('../utils/metadata')
-const rss = require('../utils/rss')
-const web = require('../utils/web')
-const pkg = require('../../package.json');
+import * as metadata from '../utils/metadata.js'
+import * as rss from '../utils/rss.js'
+import * as web from '../utils/web.js'
+import { createRequire } from "module";
+const require = createRequire(import.meta.url);
+let pkg = require("../../package.json");
 
 // Dependencies
-const boxen = require('boxen');
-const yargs = require('yargs')
-const updateNotifier = require('update-notifier');
-const fs = require('fs');
-const jsonparser = require('@creamcropdev/json')
+import boxen from 'boxen';
+let yargs = require('yargs')
+import updateNotifier from 'update-notifier';
+import * as fs from 'fs';
+import * as jsonparser from '@creamcropdev/json'
 
 const notifier = updateNotifier({pkg});
 
@@ -171,5 +173,5 @@ process.on('SIGINT', function() {
     process.exit(0)
 });
 
-exports.about = about
-exports.version = version
+export { about }
+export { version }

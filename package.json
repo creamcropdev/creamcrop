@@ -21,6 +21,7 @@
     "news-api",
     "news-getter"
   ],
+  "type": "module",
   "author": "Qlabs (@Quantalabs)",
   "license": "MIT",
   "bugs": {
@@ -33,7 +34,7 @@
   },
   "dependencies": {
     "@creamcropdev/json": "^1.0.0",
-    "boxen": "^5.0.1",
+    "boxen": "^6.2.1",
     "rss-parser": "^3.12.0",
     "update-notifier": "^5.1.0",
     "yargs": "^17.0.1",
