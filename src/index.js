@@ -1,3 +1,4 @@
 import * as metadata from './utils/metadata'
 
-export { metadata.version }export { metadata.about }
+export var version = metadata.version
+export var about = metadata.about
