@@ -21,6 +21,7 @@
     "news-api",
     "news-getter"
   ],
+  "type": "module",
   "author": "Qlabs (@Quantalabs)",
   "license": "MIT",
   "bugs": {

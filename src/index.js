@@ -1,4 +1,4 @@
-const metadata = require('./utils/metadata')
+import * as metadata from './utils/metadata'
 
-exports.version = metadata.version
-exports.about = metadata.about
+export var version = metadata.version
+export var about = metadata.about

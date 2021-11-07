@@ -1,4 +1,4 @@
-let Parser = require('rss-parser');
+import Parser from 'rss-parser';
 
 async function parse(feed_url) {
     let parser = new Parser();
@@ -6,4 +6,4 @@ async function parse(feed_url) {
     return feed
 }
 
-exports.parse = parse
+export { parse }
