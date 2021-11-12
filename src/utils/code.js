@@ -93,3 +93,5 @@ async function latest(stories=10, feed=null, config='file') {
     // Return list of first x articles in articles
     return articles.slice(0, stories)
 }
+
+export { fetch, host, latest }
