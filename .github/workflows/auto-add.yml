@@ -1,0 +1,23 @@
+name: Auto Assign to Project(s)
+
+on:
+  issues:
+    types: [opened, labeled]
+  pull_request:
+    types: [opened, labeled]
+env:
+  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+jobs:
+  assign_one_project:
+    runs-on: ubuntu-latest
+    name: Assign to One Project
+    steps:
+    - name: Assign issues and pull requests with `dependencies` label to project 1
+      uses: srggrs/assign-one-project-github-action@1.2.1
+      if: |
+        contains(github.event.issue.labels.*.name, 'dependencies') ||
+        contains(github.event.pull_request.labels.*.name, 'dependencies')
+      with:
+        project: 'https://github.com/orgs/creamcropdev/projects/1'
+        column_name: 'Todo'
