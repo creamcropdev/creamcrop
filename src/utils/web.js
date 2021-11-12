@@ -4,6 +4,8 @@ import * as rss from './rss.js';
 import * as metadata from './metadata.js';
 import * as url from 'url';
 import * as jsonparser from '@creamcropdev/json'
+import { createRequire } from "module";
+const require = createRequire(import.meta.url);
 
 /**
  * Serve website
