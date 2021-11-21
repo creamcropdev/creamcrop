@@ -6,7 +6,13 @@ function parse(url, type) {
     (async () => { 
         if (type === 'none') {
             try {
-                await rss.parse(url) // Check's if Rss is valid
+                try {
+                    await rss.parse('https://github.com/'+url+'.atom') // Check if url is a github repo
+                    url = 'https://github.com/'+url+'.atom'
+                }
+                catch {
+                    await rss.parse(url) // Check's if Rss is valid
+                }
             }
             catch {
                 await jsonparser.parse(url) // Check's if Json is valid
@@ -17,6 +23,10 @@ function parse(url, type) {
         }
         else if (type === 'json') {
             await jsonparser.parse(url)
+        }
+        else if (type === 'git') {
+            await rss.parse('https://github.com/'+url+'.atom')
+            url = 'https://github.com/'+url+'.atom'
         }
         console.log("Valid feed... adding to config")
         if (fs.existsSync('./.creamcroprc')) {
@@ -44,4 +54,4 @@ function parse(url, type) {
     })();
 }
 
-export { parse}
+export { parse }

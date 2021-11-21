@@ -41,12 +41,12 @@ yargs
         builder: (yargs) => {
             yargs.positional('url', {
                 type: 'string',
-                description: 'The url of the feed to fetch.'
+                description: 'The url of the feed to fetch, or if fetching a git repo, Owner/Repo/Type, where `type` is `releases`, `tags`, or `commits`.'
             }),
             yargs.option('type', {
                 alias: 't',
                 type: 'string',
-                description: 'The type of feed. Accepted values are "json", "rss", or "none" for creamcrop to automatically find the type.',
+                description: 'The type of feed. Accepted values are "json", "rss", "git", or "none" for creamcrop to automatically find the type.',
                 default: 'none'
             })
         }, 
