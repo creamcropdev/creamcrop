@@ -173,7 +173,7 @@ async function serve(dir, port, host, interval) {
         console.log("Custom file not found: " + dir + config.custom);
         process.exit(1);
       }
-
+      
       console.log("\nParsing RSS feed(s)...");
       customconf = customconf.replace(
         /%feed%/g,
