@@ -157,7 +157,7 @@ async function serve(dir, port, host, interval) {
 
       console.log('\nParsing RSS feed(s)...');
       customconf = customconf.replace(/%feed%/g, feed.items.map(item => `
-          ${format(item.title, item.link, item.feedlink, item.feed, item.pubdate, `<div onClick="markRead(${item.link})">`, '</div>')}
+          ${format(item.title, item.link, item.feedlink, item.feed, item.pubdate, `<div onClick="markRead("${item.link})">`, '</div>')}
         `).join('\n'));
 
         customconf = customconf.replace(/%read%/g, read.items.map(item => `
