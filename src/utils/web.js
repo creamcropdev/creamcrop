@@ -123,7 +123,6 @@ async function serve(dir, port, host, interval) {
         return new Date(b.pubdate) - new Date(a.pubdate);
       }
     });
-    console.log(read.items)
 
     function format(title, link, feedlink, feed, pubdate, add = "", end = "") {
       if (config.format !== undefined) {
