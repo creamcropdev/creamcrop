@@ -1,3 +1,7 @@
+# v0.11.0
+
+- Add `--verbose` (`-v`) and `--no-open` (`-n`) arguments
+
 # v0.10.0
 
 **BREAKING CHANGES:**
