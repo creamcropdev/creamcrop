@@ -6,13 +6,14 @@ import * as url from "url";
 import * as jsonparser from "@creamcropdev/json";
 import { createRequire } from "module";
 const require = createRequire(import.meta.url);
+const open = require("open");
 
 /**
  * Serve website
  *
  * @param {Object} dir - Config file directory
  */
-async function serve(dir, port, host, interval) {
+async function serve(dir, port, host, interval, verbose, no_open) {
   // Clear the console
   process.stdout.write("\x1Bc");
 
@@ -24,6 +25,13 @@ async function serve(dir, port, host, interval) {
   } else {
     console.log("Directory not found or No Config File: " + dir);
     process.exit(1);
+  }
+
+  // If verbose is false, remove all console.log statements
+  let oldConsoleLog;
+  if (!verbose) {
+    oldConsoleLog = console.log;
+    console.log = function() {};
   }
 
   async function generate(dir, query = null) {
@@ -366,9 +374,17 @@ async function serve(dir, port, host, interval) {
     }
   };
 
+  // Add back console.log function
+  if (!verbose) console.log = oldConsoleLog;
+
   const server = await http.createServer(requestListener);
-  server.listen(port, host, () => {
+  server.listen(port, host, async () => {
     console.log(`Server is running on http://${host}:${port}`);
+
+    // If no_open is set to true, don't open browser
+    if (!no_open) {
+      await open(`http://${host}:${port}`);
+    }
   });
 }
 

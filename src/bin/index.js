@@ -79,11 +79,23 @@ yargs
                 type: 'number',
                 default: 300000,
                 description: 'The interval to check for new posts. Defaults to 5 minutes.'
+            }),
+            yargs.option('verbose', {
+                alias: 'v',
+                type: 'boolean',
+                default: false,
+                description: 'Whether or not to print verbose output.'
+            }),
+            yargs.option('no-open', {
+                alias: 'n',
+                type: 'boolean',
+                default: false,
+                description: 'Whether or not to open the browser automatically.'
             })
         },
         handler: function(argv) {
             (async () => {
-                await web.serve(argv.dir, argv.port, argv.host, argv.interval)
+                await web.serve(argv.dir, argv.port, argv.host, argv.interval, argv.verbose, argv.noOpen)
             })();
         }
     })
