@@ -59,13 +59,14 @@ $ cream --help fetch
 Fetch a feed.
 
 Positionals:
-  url  The url of the feed to fetch.                                    [string]
+  url  The url of the feed to fetch, or if fetching a git repo, Owner/Repo/Type,
+       where `type` is `releases`, `tags`, or `commits`.                [string]
 
 Options:
       --help     Show help                                             [boolean]
       --version  Show version number                                   [boolean]
-  -t, --type     The type of feed. Accepted values are "json", "rss", or "none"
-                 for creamcrop to automatically find the type.
+  -t, --type     The type of feed. Accepted values are "json", "rss", "git", or
+                 "none" for creamcrop to automatically find the type.
                                                       [string] [default: "none"]
 ```
 Example:
@@ -96,6 +97,10 @@ Options:
   -h, --host      The host to run the server on. [string] [default: "localhost"]
   -i, --interval  The interval to check for new posts. Defaults to 5 minutes.
                                                       [number] [default: 300000]
+  -v, --verbose   Whether or not to print verbose output.
+                                                      [boolean] [default: false]
+  -n, --no-open   Whether or not to open the browser automatically.
+                                                      [boolean] [default: false]
 ```
 Example
 ```sh
@@ -113,7 +118,7 @@ $ cream about
 creamcrop
 A cream-of-the-crop, top-of-the-top, slice-and-chop, absolutely minimalist news getter.
 Qlabs (@Quantalabs)
-0.10.0
+0.11.0
 ```
 
 ## Global Options
@@ -137,16 +142,9 @@ Options:
   --version  Show version number                                       [boolean]
 
 $ cream --help fetch
-(creamcrop|cream) fetch [url]
-
-Fetch a feed.
-
-Positionals:
-  url  The url of the feed to fetch.                                    [string]
-
-Options:
-  --help     Show help                                                 [boolean]
-  --version  Show version number                                       [boolean]
+.
+.
+.
 ```
 
 
@@ -154,5 +152,5 @@ Options:
 The version command gives you the version info of the package.
 ```sh
 $ cream --version
-0.10.0
+0.11.0
 ```
