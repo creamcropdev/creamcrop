@@ -31,7 +31,7 @@ async function serve(dir, port, host, interval, verbose, no_open) {
   let oldConsoleLog;
   if (!verbose) {
     oldConsoleLog = console.log;
-    console.log = function() {};
+    console.log = function () {};
   }
 
   async function generate(dir, query = null) {
@@ -76,21 +76,18 @@ async function serve(dir, port, host, interval, verbose, no_open) {
         if (query != null) {
           // If the item's title, description, link, feed, feedlink, or pubdate does not match the query, skip the iteration
           if (
-            data.items[fitem].title
-              .toLowerCase()
-              .indexOf(query.toLowerCase()) == -1 &&
-            data.items[fitem].link.toLowerCase().indexOf(query.toLowerCase()) ==
+            data.items[fitem].title.toLowerCase().indexOf(query) == -1 &&
+            data.items[fitem].description.toLowerCase().indexOf(query) ==
               -1 &&
-            data.title.toLowerCase().indexOf(query.toLowerCase()) == -1 &&
-            data.link.toLowerCase().indexOf(query.toLowerCase()) == -1 &&
-            data.items[fitem].isoDate
-              .toLowerCase()
-              .indexOf(query.toLowerCase()) == -1
+            data.items[fitem].link.toLowerCase().indexOf(query) == -1 &&
+            data.items[fitem].feed.toLowerCase().indexOf(query) == -1 &&
+            data.items[fitem].feedlink.toLowerCase().indexOf(query) == -1 &&
+            data.items[fitem].pubdate.toLowerCase().indexOf(query) == -1
           ) {
             continue;
           }
         }
-        
+
         // If data.items[fitem].link is in config.read list, then add it to read.items and skip the iteration
         if (config.read.indexOf(data.items[fitem].link) != -1) {
           read.items.push({
@@ -99,6 +96,8 @@ async function serve(dir, port, host, interval, verbose, no_open) {
             feed: data.title,
             feedlink: data.link,
             pubdate: data.items[fitem].isoDate,
+            image: data.items[fitem].image.url,
+            description: data.items[fitem].description,
           });
           continue;
         }
@@ -108,6 +107,8 @@ async function serve(dir, port, host, interval, verbose, no_open) {
           feed: data.title,
           feedlink: data.link,
           pubdate: data.items[fitem].isoDate,
+          image: data.items[fitem].image.url,
+          description: data.items[fitem].description,
         });
       }
     }
@@ -132,17 +133,19 @@ async function serve(dir, port, host, interval, verbose, no_open) {
       }
     });
 
-    function format(title, link, feedlink, feed, pubdate, add = "", end = "") {
+    function format(title, link, feedlink, feed, pubdate, image, description, add = "", end = "") {
       if (config.format !== undefined) {
         var format = `${add}${config.format}${end}`;
-        format = format.replace(/%title%/g, title);
-        format = format.replace(/%link%/g, link);
-        format = format.replace(/%feed%/g, feed);
-        format = format.replace(/%feedlink%/g, feedlink);
-        format = format.replace(
-          /%pubdate%/g,
-          new Date(pubdate).toLocaleDateString()
-        );
+        format = format.replace(/%title%/g, title)
+          .replace(/%link%/g, link)
+          .replace(/%feed%/g, feed)
+          .replace(/%feedlink%/g, feedlink)
+          .replace(
+            /%pubdate%/g,
+            new Date(pubdate).toLocaleDateString()
+          )
+          .replace(/%image%/g, image)
+          .replace(/%description%/g, description);
         return format;
       } else {
         return `${add}<a href="${link}">${title}</a> from <a href="${feedlink}">${feed}</a>${end}`;
@@ -158,10 +161,13 @@ async function serve(dir, port, host, interval, verbose, no_open) {
       let customconf = "";
       if (config.custom == undefined) {
         // Load up basic html template, located in creamcrop's src/utils/templates/basic.html
-        customconf = fs.readFileSync(require.resolve('./templates/basic.html'), {
-          encoding: "utf8",
-          flag: "r",
-        });
+        customconf = fs.readFileSync(
+          require.resolve("./templates/basic.html"),
+          {
+            encoding: "utf8",
+            flag: "r",
+          }
+        );
       } else if (templates.indexOf(config.custom) !== -1) {
         config.custom = require.resolve(
           "./templates/" + config.custom + ".html"
@@ -180,7 +186,7 @@ async function serve(dir, port, host, interval, verbose, no_open) {
         console.log("Custom file not found: " + dir + config.custom);
         process.exit(1);
       }
-      
+
       console.log("\nParsing RSS feed(s)...");
       customconf = customconf.replace(
         /%feed%/g,
@@ -193,6 +199,8 @@ async function serve(dir, port, host, interval, verbose, no_open) {
             item.feedlink,
             item.feed,
             item.pubdate,
+            item.image,
+            item.description,
             `<div onClick="markRead(\'${item.link}\')">`,
             "</div>"
           )}
@@ -212,6 +220,8 @@ async function serve(dir, port, host, interval, verbose, no_open) {
             item.feedlink,
             item.feed,
             item.pubdate,
+            item.image,
+            item.description,
             `<div>`,
             `</div>`
           )}
@@ -238,6 +248,8 @@ async function serve(dir, port, host, interval, verbose, no_open) {
                 item.feedlink,
                 item.feed,
                 item.pubdate,
+                item.image,
+                item.description,
                 `<div onClick="markRead(\'${item.link}\')">`,
                 "</div>"
               )}
@@ -261,6 +273,8 @@ async function serve(dir, port, host, interval, verbose, no_open) {
                 item.feedlink,
                 item.feed,
                 item.pubdate,
+                item.image,
+                item.description,
                 `<div onClick="markRead(\'${item.link}\')">`,
                 "</div>"
               )}
@@ -298,7 +312,7 @@ async function serve(dir, port, host, interval, verbose, no_open) {
         `
       );
 
-      let keys = ["title", "link", "feedlink", "feed", "pubdate"];
+      let keys = ["title", "link", "feedlink", "feed", "pubdate", "image", "description"];
 
       // Replace %feedelement-x% with element-x in customconf
       for (let i = 1; i <= feed.items; i++) {
@@ -309,7 +323,7 @@ async function serve(dir, port, host, interval, verbose, no_open) {
           );
         }
       }
-      
+
       // Replace %readelement-x% with element-x in customconf
       for (let i = 1; i <= read.items; i++) {
         for (let key in keys) {
