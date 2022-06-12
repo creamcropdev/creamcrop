@@ -88,6 +88,12 @@ async function serve(dir, port, host, interval, verbose, no_open) {
           }
         }
 
+        // If data.items[fitem].image exists, let imageUrl = data.items[fitem].image.url
+        let imageUrl =
+          data.items[fitem].image != undefined
+            ? data.items[fitem].image.url
+            : "https://creamcrop.js.org/assets/Favicon.png";
+
         // If data.items[fitem].link is in config.read list, then add it to read.items and skip the iteration
         if (config.read.indexOf(data.items[fitem].link) != -1) {
           read.items.push({
@@ -96,7 +102,7 @@ async function serve(dir, port, host, interval, verbose, no_open) {
             feed: data.title,
             feedlink: data.link,
             pubdate: data.items[fitem].isoDate,
-            image: data.items[fitem].image.url,
+            image: imageUrl,
             description: data.items[fitem].description,
           });
           continue;
@@ -107,7 +113,7 @@ async function serve(dir, port, host, interval, verbose, no_open) {
           feed: data.title,
           feedlink: data.link,
           pubdate: data.items[fitem].isoDate,
-          image: data.items[fitem].image.url,
+          image: imageUrl,
           description: data.items[fitem].description,
         });
       }
