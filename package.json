@@ -35,7 +35,7 @@
   "dependencies": {
     "@creamcropdev/json": "^1.0.0",
     "ansi-regex": ">=5.0.1",
-    "boxen": "^6.2.1",
+    "boxen": "^7.0.0",
     "open": "^8.4.0",
     "rss-parser": "^3.12.0",
     "update-notifier": "^6.0.2",
